@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QSERP")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a5b69fe84b5315b65d6e880ab77abee9085ce45")]
 [assembly: System.Reflection.AssemblyProductAttribute("QSERP")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QSERP")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
