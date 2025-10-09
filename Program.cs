@@ -1,5 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using Qserp.Models;
+using Qserp.Api;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<QserpDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -28,31 +35,33 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-// 寫死的帳號密碼
-var validEmpId = "1002327011";
-var validPass = "1002327011";
-var adminEmpId = "admin";
-var adminPass = "admin";
-
-// 登入 API
-app.MapPost("/api/login", (LoginRequest req) =>
-{
-    if ((req.EMPID == validEmpId && req.PASS == validPass) || (req.EMPID == adminEmpId && req.PASS == adminPass))
-    {
-        var isAdmin = req.EMPID == adminEmpId;
-        return Results.Ok(new { success = true, empid = req.EMPID, isAdmin = isAdmin });
-    }
-    else
-    {
-        return Results.Unauthorized();
-    }
-});
+// 註冊 Auth API
+AuthApi.Register(app);
 
 app.Run();
 
-// 登入請求的資料模型
-public class LoginRequest
-{
-    public required string EMPID { get; set; }
-    public required string PASS { get; set; }
-}
+
+// using Microsoft.Data.SqlClient;
+// using Microsoft.Extensions.Configuration;
+
+// // 讀取 appsettings.json
+// var config = new ConfigurationBuilder()
+//     .AddJsonFile("appsettings.json")
+//     .Build();
+
+// string connectionString = config.GetConnectionString("DefaultConnection");
+
+// using (SqlConnection connection = new SqlConnection(connectionString))
+// {
+//     try
+//     {
+//         connection.Open();
+//         Console.WriteLine("✅ 資料庫連線成功！");
+        
+//     }
+//     catch (Exception ex)
+//     {
+//         Console.WriteLine("❌ 資料庫連線失敗！");
+//         Console.WriteLine("錯誤訊息：" + ex.Message);
+//     }
+// }
